@@ -7,6 +7,7 @@ function App() {
   const [numberAllowed, setNumberAllowed] = useState(false);
   const [charAllowed, setCharAllowed] = useState(false);
   const [password, setPassword] = useState("");
+  const [copyBtnText, setCopyBtnText] = useState("");
   const passwordRef = useRef(null);
 
   const generatePassword = useCallback(() => {
@@ -27,10 +28,12 @@ function App() {
     passwordRef.current.select();
     passwordRef.current.setSelectionRange(0, 10);
     window.navigator.clipboard.writeText(password);
+    setCopyBtnText("Copied");
   }, [password]);
 
   useEffect(() => {
     generatePassword();
+    setCopyBtnText("Copy");
   }, [length, numberAllowed, charAllowed, generatePassword]);
 
   return (
@@ -49,7 +52,7 @@ function App() {
           onClick={copyToClipBoard}
           className="bg-orange-400 px-5 rounded-r-lg"
         >
-          Copy
+          {copyBtnText}
         </button>
       </div>
       <div className="flex items-center gap-x-4">
